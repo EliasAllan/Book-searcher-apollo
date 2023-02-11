@@ -16,7 +16,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "apollo-server-express": "^3.11.1",
     "react-scripts": "^5.0.1"
-    
   }
 }
