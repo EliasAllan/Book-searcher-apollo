@@ -1,19 +1,5 @@
 
-
-
-
-
-
-//this needs to be looked at, its a copy/paste from mini project
-
-
-
-
-
-
-
-
-const { Tech, Matchup } = require('../models');
+const { User } = require('../models');
 
 const resolvers = {
   Query: {
@@ -22,18 +8,23 @@ const resolvers = {
     },
   },
   Mutation: {
-    createMatchup: async (parent, args) => {
-      const matchup = await Matchup.create(args);
-      return matchup;
+    login: async (parent, args) => {
+      const user = await User.create(args);
+      return user;
     },
-    createVote: async (parent, { _id, techNum }) => {
-      const vote = await Matchup.findOneAndUpdate(
-        { _id },
-        { $inc: { [`tech${techNum}_votes`]: 1 } },
-        { new: true }
-      );
-      return vote;
+    addUser: async (parent, { username, email, bookCount }) => {
+      return await User.create({ username, email, bookCount });
     },
+    saveBook: async (parent, { book }) => {
+      return await User.findOneAndUpdate({ _id: id }, {$push:{savedBooks: book}}, {new: true});
+    },
+    removeBook: async (parent, { bookId }) => {
+      return await User.findOneAndDelete(
+        {_id: bookId},
+        {$pull: {savedBooks: book}},
+        {new:true}
+        )
+    }
   },
 };
 
