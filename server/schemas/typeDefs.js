@@ -6,16 +6,16 @@ type User {
   _id: ID!
   username: String!
   email: String!
-  bookCount: Int!
+  bookCount: Int
   savedbooks: [Book]
 }
   type Book {
     bookId: ID!
     authors: [String!]
     description:String!
+    title:String!
     image:String
     link:String
-    title:String!
   }
 
   type Auth {
