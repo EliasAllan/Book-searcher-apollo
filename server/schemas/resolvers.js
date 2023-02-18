@@ -58,6 +58,7 @@ const resolvers = {
 
         return book;
       }
+      console.log(context)
       throw new AuthenticationError('You need to be logged in!');
     },
     removeBook: async (parent, { bookId }) => {
