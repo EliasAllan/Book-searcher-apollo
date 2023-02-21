@@ -17,21 +17,28 @@ const resolvers = {
   },
   },
   Mutation: {
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
-      
-      if (!user) {
-        throw new AuthenticationError('No profile with this email found!');
+
+    loginUser: async (parent, { email, password }) => {
+      try{
+        console.log("Loging in to user!")
+
+        const user = await User.findOne({ email });
+        console.log(user)
+        if (!user) {
+          throw new AuthenticationError('No profile with this email found!');
+        }
+        
+        const correctPw = await user.isCorrectPassword(password);
+        console.log(correctPw)
+        if (!correctPw) {
+          throw new AuthenticationError('Incorrect password!');
+        }
+        
+        const token = signToken(user);
+        return { token, user };
+      } catch(error){
+        console.log(error)
       }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect password!');
-      }
-
-      const token = signToken(user);
-      return { token, user };
     },
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
@@ -44,13 +51,15 @@ const resolvers = {
       { author, description, title, bookId, image, link },
       context
   ) => {
+    try{
+      console.log("Saving a Book!")
       if (context.user) {
-
-          const user = await User.findOneAndUpdate(
+        
+        const user = await User.findOneAndUpdate(
               { _id: context.user._id },
               {
                   $addToSet: {
-                      savedBooks: {
+                    savedBooks: {
                           author,
                           description,
                           title,
@@ -63,13 +72,16 @@ const resolvers = {
               {
                   new: true,
                   runValidators: true, // remove if crashes
+                }
+                );
+                
+                return user;
               }
-          );
-
-          return user;
-      }
-      console.log(context);
-      throw new AuthenticationError('You need to be logged in!');
+              console.log(context);
+              throw new AuthenticationError('You need to be logged in!');
+            } catch (error) {
+              console.log(error)
+            }
   },
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
