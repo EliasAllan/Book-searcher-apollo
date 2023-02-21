@@ -48,7 +48,7 @@ const resolvers = {
     },
     saveBook: async (
       parent,
-      { author, description, title, bookId, image, link },
+      { authors, description, title, bookId, image, link },
       context
   ) => {
     try{
@@ -60,7 +60,7 @@ const resolvers = {
               {
                   $addToSet: {
                     savedBooks: {
-                          author,
+                          authors,
                           description,
                           title,
                           bookId,
