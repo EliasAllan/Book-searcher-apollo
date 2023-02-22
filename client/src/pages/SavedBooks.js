@@ -10,7 +10,8 @@ import { GET_ME } from '../utils/queries';
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
   const { username: userParam } = useParams();
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data } = useQuery(GET_ME)
+
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
 
@@ -23,7 +24,7 @@ const SavedBooks = () => {
           return false;
         }
 
-      
+        const response = data?.thoughts || [];
 
         // const { data } = useQuery(GET_ME, { 
         //   variables: { username: userParam },
