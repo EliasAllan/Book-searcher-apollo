@@ -23,8 +23,8 @@ const SavedBooks = () => {
         if (!token) {
           return false;
         }
-
-        const response = data?.thoughts || [];
+        console.log(data)
+        const me = data?.me || [];
 
         // const { data } = useQuery(GET_ME, { 
         //   variables: { username: userParam },
@@ -69,13 +69,14 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+    fixing errors
+      {/* <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
@@ -103,7 +104,7 @@ const SavedBooks = () => {
             );
           })}
         </CardColumns>
-      </Container>
+      </Container> */}
     </>
   );
 };
