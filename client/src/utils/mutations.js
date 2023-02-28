@@ -49,6 +49,7 @@ mutation removeBook($bookId: String!) {
       _id
       bookCount
       email
+      username
       savedbooks {
         bookId
         authors
@@ -57,7 +58,6 @@ mutation removeBook($bookId: String!) {
         link
         title
       }
-      username
     }
   }
   
