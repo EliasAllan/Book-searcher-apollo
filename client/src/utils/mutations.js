@@ -50,7 +50,7 @@ mutation removeBook($bookId: String!) {
       bookCount
       email
       username
-      savedbooks {
+      savedBooks {
         bookId
         authors
         description
